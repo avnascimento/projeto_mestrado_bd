@@ -1,0 +1,25 @@
+version: "3.1"
+services:  
+    postgres:
+        image: postgres:latest
+        restart: always
+        volumes: 
+            # Create Test database on Postgresqls
+            - ./postgres_scripts:/postgres_scripts
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=mydbfarm
+        ports:
+            - "5432:5432"
+
+    pg_admin:
+      image: dpage/pgadmin4:latest
+      container_name: pgadmin4
+      ports:
+        - "15432:80"
+      environment:
+        - PGADMIN_DEFAULT_EMAIL=teste@email.com
+        - PGADMIN_DEFAULT_PASSWORD=teste
+      depends_on:
+        - postgres
